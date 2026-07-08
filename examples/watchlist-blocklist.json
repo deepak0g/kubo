@@ -1,0 +1,7 @@
+{
+  "entity_type": "device_fingerprint",
+  "entity_value": "device_known_fraudster",
+  "list_type": "blocklist",
+  "reason": "Device associated with 5+ chargebacks in past 30 days",
+  "added_by": "fraud_analyst"
+}

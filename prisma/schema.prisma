@@ -1,0 +1,80 @@
+// Prisma schema for Kubo Risk Scoring Engine
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./data/kubo.db"
+}
+
+model Transaction {
+  id                   String   @id @default(uuid())
+  transactionId        String   @unique @map("transaction_id")
+  timestamp            DateTime
+  amount               Float
+  currency             String   @default("USD")
+  status               String   // approved, declined, chargeback, pending
+
+  // Buyer info
+  buyerId              String   @map("buyer_id")
+  accountCreatedAt     DateTime @map("account_created_at")
+  email                String
+  emailDomain          String   @map("email_domain")
+  totalOrders          Int      @map("total_orders")
+  lifetimeSpend        Float    @map("lifetime_spend")
+
+  // Device/Session
+  deviceFingerprint    String   @map("device_fingerprint")
+  ipAddress            String   @map("ip_address")
+  ipCountry            String   @map("ip_country")
+  userAgent            String   @map("user_agent")
+
+  // Payment info
+  cardLast4            String   @map("card_last4")
+  cardBin              String   @map("card_bin")
+  cardIssuingCountry   String   @map("card_issuing_country")
+
+  // Shipping info
+  shippingAddress      String   @map("shipping_address")
+  shippingCity         String   @map("shipping_city")
+  shippingCountry      String   @map("shipping_country")
+  isNewAddress         Boolean  @map("is_new_address")
+
+  // Billing info
+  billingCountry       String   @map("billing_country")
+
+  createdAt            DateTime @default(now()) @map("created_at")
+
+  @@index([buyerId])
+  @@index([deviceFingerprint])
+  @@index([timestamp])
+  @@index([status])
+  @@map("transactions")
+}
+
+model DeviceReputation {
+  deviceFingerprint    String   @id @map("device_fingerprint")
+  totalTransactions    Int      @default(0) @map("total_transactions")
+  chargebackCount      Int      @default(0) @map("chargeback_count")
+  firstSeen            DateTime @map("first_seen")
+  lastSeen             DateTime @map("last_seen")
+  associatedBuyerIds   String   @map("associated_buyer_ids") // JSON string
+
+  @@map("device_reputation")
+}
+
+model Watchlist {
+  id           String   @id @default(uuid())
+  entityType   String   @map("entity_type") // email, device_fingerprint, shipping_address, ip_address
+  entityValue  String   @map("entity_value")
+  listType     String   @map("list_type") // blocklist, allowlist
+  reason       String
+  addedAt      DateTime @map("added_at")
+  addedBy      String   @map("added_by")
+
+  @@index([entityType, entityValue])
+  @@index([listType])
+  @@map("watchlist")
+}

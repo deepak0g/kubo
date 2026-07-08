@@ -1,0 +1,22 @@
+{
+  "amount": 45.99,
+  "currency": "USD",
+  "buyer_id": "buyer_example_001",
+  "account_created_at": "2024-01-15T10:30:00Z",
+  "email": "john.doe@gmail.com",
+  "email_domain": "gmail.com",
+  "total_orders": 12,
+  "lifetime_spend": 687.50,
+  "device_fingerprint": "device_chrome_desktop_001",
+  "ip_address": "203.145.67.89",
+  "ip_country": "US",
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+  "card_last4": "4532",
+  "card_bin": "424242",
+  "card_issuing_country": "US",
+  "shipping_address": "123 Main Street",
+  "shipping_city": "San Francisco",
+  "shipping_country": "US",
+  "is_new_address": false,
+  "billing_country": "US"
+}

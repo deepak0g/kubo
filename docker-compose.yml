@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8080:3000"
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - RISK_THRESHOLD_LOW=30
+      - RISK_THRESHOLD_MEDIUM=70
+      - DB_PATH=/app/data/kubo.db
+      - ENABLE_WATCHLIST=true
+    command: npm start
+    restart: unless-stopped
